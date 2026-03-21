@@ -1,6 +1,10 @@
 import "./App.css";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import EntryPage from "./pages/EntryPage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 import SearchParkingPage from "./pages/SearchParkingPage";
 import ParkingResultsPage from "./pages/ParkingResultsPage";
 import GuestAccessPage from "./pages/GuestAccessPage";
@@ -14,21 +18,26 @@ import RegistrationSuggestionPage from "./pages/RegistrationSuggestionPage";
 
 function App() {
   return (
-    <div className="app">
-      <h1>GPS Parking Spot App</h1>
+    <BrowserRouter>
+      <div className="app">
 
-      <LoginPage />
-      <SearchParkingPage />
-      <ParkingResultsPage />
-      <GuestAccessPage />
-      <GuestParkingPage />
-      <DashboardPage />
-      <ParkingTypePage />
-      <NavigationPage />
-      <AdminDashboardPage />
-      <ManageParkingSpotsPage />
-      <RegistrationSuggestionPage />
-    </div>
+        <Routes>
+          <Route path="/" element={<EntryPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<SignupPage />} />
+          <Route path="/search" element={<SearchParkingPage />} />
+          <Route path="/results" element={<ParkingResultsPage />} />
+          <Route path="/guest" element={<GuestAccessPage />} />
+          <Route path="/guest-parking" element={<GuestParkingPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/parking-type" element={<ParkingTypePage />} />
+          <Route path="/navigation" element={<NavigationPage />} />
+          <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/manage" element={<ManageParkingSpotsPage />} />
+          <Route path="/register-suggestion" element={<RegistrationSuggestionPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
