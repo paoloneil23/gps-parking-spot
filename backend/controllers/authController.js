@@ -33,7 +33,6 @@ const registerUser = async (req, res) => {
         id: user._id,
         fullName: user.fullName,
         email: user.email,
-        role: user.role,
       },
     });
   } catch (error) {
@@ -65,7 +64,6 @@ const loginUser = async (req, res) => {
       {
         userId: user._id,
         email: user.email,
-        role: user.role,
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
@@ -78,7 +76,6 @@ const loginUser = async (req, res) => {
         id: user._id,
         fullName: user.fullName,
         email: user.email,
-        role: user.role,
       },
     });
   } catch (error) {

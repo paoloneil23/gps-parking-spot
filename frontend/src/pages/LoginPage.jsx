@@ -49,11 +49,7 @@ function LoginPage() {
       storage.setItem("token", data.token);
       storage.setItem("user", JSON.stringify(data.user));
 
-      if (data.user.role === "admin") {
-      navigate("/admin");
-      } else {
       navigate("/dashboard");
-}
     } catch (err) {
       setError("Unable to reach server. Please try again.");
     } finally {
