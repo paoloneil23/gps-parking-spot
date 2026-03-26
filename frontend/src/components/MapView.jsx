@@ -11,6 +11,8 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 // --- Icons ---
 function createParkingIcon(backgroundColor, borderColor) {
   return L.divIcon({
@@ -88,7 +90,7 @@ function MapView({ spot: selectedSpot, spots: providedSpots = [], onSelectSpot }
     if (!userCoords) return;
     const [lat, lng] = userCoords;
 
-    fetch(`http://localhost:5000/api/parking/search?lat=${lat}&lng=${lng}`)
+    fetch(`${API_BASE}/api/parking/search?lat=${lat}&lng=${lng}`)
       .then((res) => res.json())
       .then((data) => setNearbySpots(data))
       .catch((err) => console.error("Error fetching parking spots:", err));
