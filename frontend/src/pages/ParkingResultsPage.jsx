@@ -4,7 +4,7 @@ import ParkingCard from "../components/ParkingCard";
 import MapView from "../components/MapView";
 import "./ParkingResultsPage.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function ParkingResultsPage() {
   const [parkingSpots, setParkingSpots] = useState([]);

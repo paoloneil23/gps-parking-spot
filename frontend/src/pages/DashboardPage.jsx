@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import ParkingTypeFilter from "../components/ParkingTypeFilter";
 import "./DashboardPage.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function DashboardPage() {
   const [spots, setSpots] = useState([]);
