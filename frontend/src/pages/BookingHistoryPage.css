@@ -1,0 +1,168 @@
+.booking-history-page {
+  min-height: calc(100vh - 64px);
+  padding: 24px 16px 40px;
+  background:
+    radial-gradient(circle at 10% 12%, rgba(255, 255, 255, 0.28), transparent 35%),
+    linear-gradient(135deg, #f8c9a9, #7670ff);
+}
+
+.booking-history-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+}
+
+.booking-history-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 14px 34px rgba(32, 25, 90, 0.16);
+}
+
+.booking-history-tag {
+  margin: 0;
+  color: #0f766e;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.84rem;
+}
+
+.booking-history-header h1 {
+  margin: 6px 0;
+  color: #2f2f3d;
+}
+
+.booking-history-header p {
+  margin: 0;
+  color: #5f5f74;
+}
+
+.back-home-btn,
+.delete-history-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.back-home-btn {
+  background: linear-gradient(135deg, #7a73ff, #655ef0);
+  color: #fff;
+}
+
+.delete-history-btn {
+  background: #ffe7e7;
+  color: #af3030;
+}
+
+.booking-history-message {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.booking-history-message.success {
+  color: #1f7a3f;
+}
+
+.booking-history-message.error {
+  color: #b03f3f;
+}
+
+.booking-history-card {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.93);
+  box-shadow: 0 10px 26px rgba(32, 25, 90, 0.12);
+}
+
+.booking-history-empty {
+  margin: 0;
+  color: #5f5f74;
+}
+
+.booking-history-list {
+  display: grid;
+  gap: 12px;
+}
+
+.booking-history-item {
+  border: 1px solid #e6e1ff;
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+}
+
+.booking-history-item-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.booking-history-item h3 {
+  margin: 0 0 4px;
+  color: #2f2f3d;
+}
+
+.booking-history-item p {
+  margin: 0;
+  color: #5f5f74;
+}
+
+.history-status {
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-active {
+  background: #fff3cd;
+  color: #916400;
+}
+
+.status-completed {
+  background: #e6f8ee;
+  color: #1f7a3f;
+}
+
+.status-cancelled {
+  background: #fde8e8;
+  color: #b03f3f;
+}
+
+.booking-history-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-top: 12px;
+  color: #4f4f67;
+  font-size: 0.93rem;
+}
+
+.booking-history-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .booking-history-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .booking-history-item-main {
+    flex-direction: column;
+  }
+}
