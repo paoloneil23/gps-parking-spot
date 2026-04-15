@@ -165,7 +165,7 @@ const createParkingSpot = async (req, res) => {
 
 const searchParkingSpots = async (req, res) => {
   try {
-    const { location, maxPrice, freeOnly, lng, lat, distance = 2000 } = req.query;
+    const { location, maxPrice, freeOnly, lng, lat } = req.query;
 
     let query = {};
 
@@ -191,19 +191,97 @@ const searchParkingSpots = async (req, res) => {
       });
     }
 
-    if (lng && lat) {
-      query.location = {
-        $near: {
-          $geometry: {
-            type: "Point",
-            coordinates: [parseFloat(lng), parseFloat(lat)],
-          },
-          $maxDistance: Number(distance),
-        },
-      };
-    }
+    let spots = await ParkingSpot.find(query).lean();
 
-    const spots = await ParkingSpot.find(query);
+    if (lat && lng) {
+      const userLat = parseFloat(lat);
+      const userLng = parseFloat(lng);
+
+      const toRadians = (value) => (value * Math.PI) / 180;
+
+      const calculateDistanceKm = (lat1, lng1, lat2, lng2) => {
+        const R = 6371;
+        const dLat = toRadians(lat2 - lat1);
+        const dLng = toRadians(lng2 - lng1);
+
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRadians(lat1)) *
+            Math.cos(toRadians(lat2)) *
+            Math.sin(dLng / 2) *
+            Math.sin(dLng / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+      };
+
+      spots = spots.map((spot) => {
+        const coordinates = spot.location?.coordinates || [];
+        const spotLng = Number(coordinates[0]);
+        const spotLat = Number(coordinates[1]);
+
+        if (Number.isFinite(spotLat) && Number.isFinite(spotLng)) {
+          const distanceKm = calculateDistanceKm(userLat, userLng, spotLat, spotLng);
+
+          return {
+            ...spot,
+            distanceKm: Number(distanceKm.toFixed(2)),
+            distanceToEntranceKm: Number(distanceKm.toFixed(2)),
+            distanceToEVChargerKm:
+              String(spot.type || "").toLowerCase() === "ev"
+                ? Number((distanceKm + 0.1).toFixed(2))
+                : null,
+          };
+        }
+
+        return {
+          ...spot,
+          distanceKm: null,
+          distanceToEntranceKm: null,
+          distanceToEVChargerKm: null,
+        };
+      });
+
+      spots.sort((a, b) => {
+        const aAvailable =
+          typeof a.availableSpots === "number"
+            ? a.availableSpots > 0
+            : typeof a.isAvailable === "boolean"
+              ? a.isAvailable
+              : true;
+
+        const bAvailable =
+          typeof b.availableSpots === "number"
+            ? b.availableSpots > 0
+            : typeof b.isAvailable === "boolean"
+              ? b.isAvailable
+              : true;
+
+        if (aAvailable !== bAvailable) {
+          return aAvailable ? -1 : 1;
+        }
+
+        if (a.distanceKm == null && b.distanceKm == null) return 0;
+        if (a.distanceKm == null) return 1;
+        if (b.distanceKm == null) return -1;
+
+        return a.distanceKm - b.distanceKm;
+      });
+
+      spots = spots.map((spot, index) => {
+        const isAvailable =
+          typeof spot.availableSpots === "number"
+            ? spot.availableSpots > 0
+            : typeof spot.isAvailable === "boolean"
+              ? spot.isAvailable
+              : true;
+
+        return {
+          ...spot,
+          isBestOption: index === 0 && isAvailable,
+        };
+      });
+    }
 
     res.status(200).json(spots);
   } catch (error) {

@@ -8,15 +8,37 @@ import "./ParkingResultsPage.css";
 const API_BASE = getApiBase();
 
 function ParkingResultsPage() {
+  const locationHook = useLocation();
+  const navigate = useNavigate();
+
   const [parkingSpots, setParkingSpots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedSpot, setSelectedSpot] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [userCoords, setUserCoords] = useState(null);
+  const [locationReady, setLocationReady] = useState(false);
 
-  const locationHook = useLocation();
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setLocationReady(true);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setUserCoords({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        setLocationReady(true);
+      },
+      () => {
+        setLocationReady(true);
+      }
+    );
+  }, []);
 
   const fetchParkingSpots = useCallback(async ({ silent = false } = {}) => {
     const params = new URLSearchParams(locationHook.search);
@@ -34,8 +56,19 @@ function ParkingResultsPage() {
     setError("");
 
     try {
+      const searchParams = new URLSearchParams({
+        location,
+        maxPrice,
+        freeOnly,
+      });
+
+      if (userCoords?.lat && userCoords?.lng) {
+        searchParams.append("lat", userCoords.lat);
+        searchParams.append("lng", userCoords.lng);
+      }
+
       const response = await fetch(
-        `${API_BASE}/api/parking/search?location=${encodeURIComponent(location)}&maxPrice=${encodeURIComponent(maxPrice)}&freeOnly=${encodeURIComponent(freeOnly)}`
+        `${API_BASE}/api/parking/search?${searchParams.toString()}`
       );
 
       if (!response.ok) {
@@ -65,24 +98,38 @@ function ParkingResultsPage() {
       }
       setIsRefreshing(false);
     }
-  }, [locationHook.search]);
+  }, [locationHook.search, userCoords]);
 
   useEffect(() => {
+    if (!locationReady) return;
     fetchParkingSpots();
-  }, [fetchParkingSpots]);
+  }, [fetchParkingSpots, locationReady]);
 
   const params = useMemo(() => {
     return new URLSearchParams(locationHook.search);
   }, [locationHook.search]);
-  
+
   const searchLocation = params.get("location") || "";
   const searchMaxPrice = params.get("maxPrice") || "";
   const freeOnlyEnabled = ["1", "true"].includes(
     (params.get("freeOnly") || "0").toLowerCase()
   );
 
-  if (loading) return <div className="loading-container"><p>Loading parking spots...</p></div>;
-  if (error) return <div className="error-container"><p>Error: {error}</p></div>;
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <p>Loading parking spots...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <p>Error: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="parking-results-page">
@@ -99,7 +146,9 @@ function ParkingResultsPage() {
           </p>
           <p className="results-live-status">
             {isRefreshing ? "Syncing..." : "Manual updates only"}
-            {lastUpdated ? ` • Last updated ${lastUpdated.toLocaleTimeString()}` : ""}
+            {lastUpdated
+              ? ` • Last updated ${lastUpdated.toLocaleTimeString()}`
+              : ""}
           </p>
           <button
             type="button"
@@ -113,15 +162,18 @@ function ParkingResultsPage() {
       </div>
 
       {parkingSpots.length === 0 ? (
-        <p className="no-results">No parking spots found matching your criteria.</p>
+        <p className="no-results">
+          No parking spots found matching your criteria.
+        </p>
       ) : (
         <div className="results-container">
           <section className="spots-list">
             <h3>Available Parking Lots ({parkingSpots.length})</h3>
-            {parkingSpots.map((spot) => (
+            {parkingSpots.map((spot, index) => (
               <ParkingCard
                 key={spot._id}
                 spot={spot}
+                rank={index}
                 isSelected={selectedSpot?._id === spot._id}
                 onSelect={setSelectedSpot}
               />
