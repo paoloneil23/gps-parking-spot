@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Page background */
+.signup-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #FFCBA4, #7a73ff);
+  padding: 24px;
+}
+
+/* Card */
+.signup-card {
+  width: 360px;
+  background: #ffffff;
+  border-radius: 30px;
+  padding: 36px 28px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+/* Image */
+.signup-image {
+  width: 150px;
+  margin-bottom: 15px;
+}
+
+/* Title + subtitle */
+.signup-title {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  color: #333333;
+}
+
+.signup-subtitle {
+  margin: 0 0 28px;
+  color: #666666;
+  font-size: 0.95rem;
+}
+
+/* Form */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #7a73ff;
+  border-radius: 14px;
+  font-size: 1rem;
+  outline: none;
+  background: #fffaf7;
+}
+
+.signup-form input:focus {
+  border-color: #7a73ff;
+}
+
+.admin-signup-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #4a4a66;
+  font-size: 0.92rem;
+}
+
+.admin-signup-toggle input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #7a73ff;
+}
+
+/* Primary button */
+.signup-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 24px;
+  background: #7a73ff;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.signup-button:hover {
+  background: #6a64e8;
+}
+
+/* Divider */
+.signup-divider {
+  margin: 22px 0 16px;
+  color: #999999;
+  font-size: 0.9rem;
+}
+
+/* Secondary buttons */
+.login-redirect,
+.guest-button,
+.back-button {
+  width: 100%;
+  padding: 13px;
+  border-radius: 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: 0.2s ease;
+}
+
+/* Login redirect */
+.login-redirect {
+  border: 2px solid #7a73ff;
+  background: transparent;
+  color: #7a73ff;
+}
+
+.login-redirect:hover {
+  background: #7a73ff;
+  color: white;
+}
+
+/* Guest */
+.guest-button {
+  border: none;
+  background: #f3f2ff;
+  color: #5a54d1;
+}
+
+.guest-button:hover {
+  background: #e4e2ff;
+}
+
+/* Back */
+.back-button {
+  border: none;
+  background: none;
+  color: #777777;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}

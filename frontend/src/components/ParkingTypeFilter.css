@@ -1,0 +1,121 @@
+.parking-type-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 0.8rem 0.9rem;
+  background: #f8fbff;
+  border-radius: 10px;
+  border: 1px solid #d5e2f6;
+  min-height: 44px;
+  min-width: 360px;
+  width: 100%;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.filter-header h3 {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #234a81;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.76rem;
+}
+
+.filter-link {
+  background: none;
+  border: none;
+  color: #2d66bf;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.filter-link:hover {
+  color: #194f9e;
+  text-decoration: underline;
+}
+
+.filter-separator {
+  color: #b5c7e5;
+}
+
+.filter-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  padding: 0.5rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid #cfe0fb;
+  background: #ffffff;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.filter-checkbox:hover {
+  background: #edf5ff;
+  border-color: #aac8f6;
+}
+
+.filter-checkbox input {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  accent-color: #2b6ccf;
+}
+
+.checkbox-label {
+  font-size: 0.78rem;
+  color: #355888;
+  font-weight: 600;
+  user-select: none;
+}
+
+.filter-selected {
+  width: 100%;
+  border-top: 1px dashed #d5e2f6;
+  padding-top: 0.35rem;
+}
+
+.selected-count {
+  font-size: 0.74rem;
+  color: #577cb3;
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .parking-type-filter {
+    min-width: 0;
+  }
+
+  .filter-options {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-selected {
+    border-top: none;
+    padding-top: 0;
+  }
+}
