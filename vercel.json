@@ -1,6 +1,0 @@
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "cd \"OneDrive/Desktop/Fourth Semester- software engineering/Software Development Project 1/gps-parking-spot-main (1)/gps-parking-spot-main/frontend\" && npm ci",
-  "buildCommand": "cd \"OneDrive/Desktop/Fourth Semester- software engineering/Software Development Project 1/gps-parking-spot-main (1)/gps-parking-spot-main/frontend\" && npm run build",
-  "outputDirectory": "OneDrive/Desktop/Fourth Semester- software engineering/Software Development Project 1/gps-parking-spot-main (1)/gps-parking-spot-main/frontend/dist"
-}
